@@ -6,34 +6,37 @@ typedef Future<dynamic> EventHandler(String res);
 typedef Future<dynamic> EventHandlerMap(Map<String, dynamic> event);
 
 class Getuiflut {
-
   static const MethodChannel _channel = const MethodChannel('getuiflut');
 
-  EventHandler _onReceiveClientId;
-  EventHandlerMap _onReceiveMessageData;
-  EventHandlerMap _onNotificationMessageArrived;
-  EventHandlerMap _onNotificationMessageClicked;
-
+  EventHandler? _onReceiveClientId;
+  EventHandlerMap? _onReceiveMessageData;
+  EventHandlerMap? _onNotificationMessageArrived;
+  EventHandlerMap? _onNotificationMessageClicked;
 
   // deviceToken
-  EventHandler _onRegisterDeviceToken;
-  // voipToken
-  EventHandler _onRegisterVoipToken;
-  //  iOS收到的透传内容
-  EventHandlerMap _onReceivePayload;
-  // ios 收到APNS消息
-  EventHandlerMap _onReceiveNotificationResponse;
-  // ios 收到AppLink消息
-  EventHandler _onAppLinkPayload;
-  // ios 收到VOIP消息
-  EventHandlerMap _onReceiveVoipPayLoad;
+  EventHandler? _onRegisterDeviceToken;
 
-  EventHandlerMap _onPushModeResult;
-  EventHandlerMap _onSetTagResult;
-  EventHandlerMap _onAliasResult;
-  EventHandlerMap _onQueryTagResult;
-  EventHandlerMap _onWillPresentNotification;
-  EventHandlerMap _onOpenSettingsForNotification;
+  // voipToken
+  EventHandler? _onRegisterVoipToken;
+
+  //  iOS收到的透传内容
+  EventHandlerMap? _onReceivePayload;
+
+  // ios 收到APNS消息
+  EventHandlerMap? _onReceiveNotificationResponse;
+
+  // ios 收到AppLink消息
+  EventHandler? _onAppLinkPayload;
+
+  // ios 收到VOIP消息
+  EventHandlerMap? _onReceiveVoipPayLoad;
+
+  EventHandlerMap? _onPushModeResult;
+  EventHandlerMap? _onSetTagResult;
+  EventHandlerMap? _onAliasResult;
+  EventHandlerMap? _onQueryTagResult;
+  EventHandlerMap? _onWillPresentNotification;
+  EventHandlerMap? _onOpenSettingsForNotification;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -60,93 +63,90 @@ class Getuiflut {
   }
 
   void turnOffPush() {
-    if(Platform.isAndroid) {
-       _channel.invokeMethod('stopPush');
+    if (Platform.isAndroid) {
+      _channel.invokeMethod('stopPush');
     }
   }
 
   void onActivityCreate() {
     _channel.invokeMethod('onActivityCreate');
   }
-  
-  void bindAlias(String alias,String sn) {
-    if(Platform.isAndroid) {
-      _channel.invokeMethod('bindAlias',<String,dynamic>{'alias':alias});
+
+  void bindAlias(String alias, String sn) {
+    if (Platform.isAndroid) {
+      _channel.invokeMethod('bindAlias', <String, dynamic>{'alias': alias});
     } else {
-      _channel.invokeMethod('bindAlias',<String,dynamic>{'alias':alias,'aSn':sn});
+      _channel.invokeMethod(
+          'bindAlias', <String, dynamic>{'alias': alias, 'aSn': sn});
     }
   }
 
-  void unbindAlias(String alias,String sn,bool isSelf) {
-    if(Platform.isAndroid) {
-      _channel.invokeMethod('unbindAlias',<String,dynamic>{'alias':alias});
+  void unbindAlias(String alias, String sn, bool isSelf) {
+    if (Platform.isAndroid) {
+      _channel.invokeMethod('unbindAlias', <String, dynamic>{'alias': alias});
     } else {
-      _channel.invokeMethod('unbindAlias',<String,dynamic>{'alias':alias,'aSn':sn,'isSelf':isSelf});
+      _channel.invokeMethod('unbindAlias',
+          <String, dynamic>{'alias': alias, 'aSn': sn, 'isSelf': isSelf});
     }
   }
 
   void setBadge(int badge) {
-    if(Platform.isAndroid) {
-
+    if (Platform.isAndroid) {
     } else {
-      _channel.invokeMethod('setBadge',<String,dynamic>{'badge':badge});
+      _channel.invokeMethod('setBadge', <String, dynamic>{'badge': badge});
     }
   }
 
   void resetBadge() {
-    if(Platform.isAndroid) {
-
+    if (Platform.isAndroid) {
     } else {
       _channel.invokeMethod('resetBadge');
     }
   }
-   
-  void setLocalBadge(int badge) {
-    if(Platform.isAndroid) {
 
+  void setLocalBadge(int badge) {
+    if (Platform.isAndroid) {
     } else {
-      _channel.invokeMethod('setLocalBadge',<String,dynamic>{'badge':badge});
+      _channel.invokeMethod('setLocalBadge', <String, dynamic>{'badge': badge});
     }
   }
 
   void setTag(List<dynamic> tags) {
-    _channel.invokeMethod('setTag',<String,dynamic>{'tags':tags});
+    _channel.invokeMethod('setTag', <String, dynamic>{'tags': tags});
   }
 
   void addEventHandler({
-    EventHandler onReceiveClientId,
-    EventHandlerMap onReceiveMessageData,
-    EventHandlerMap onNotificationMessageArrived,
-    EventHandlerMap onNotificationMessageClicked,
-
+    EventHandler? onReceiveClientId,
+    EventHandlerMap? onReceiveMessageData,
+    EventHandlerMap? onNotificationMessageArrived,
+    EventHandlerMap? onNotificationMessageClicked,
 
     //deviceToken
-    EventHandler onRegisterDeviceToken,
+    EventHandler? onRegisterDeviceToken,
     //voipToken
-    EventHandler onRegisterVoipToken,
+    EventHandler? onRegisterVoipToken,
     //ios 收到的透传内容
-    EventHandlerMap onReceivePayload,
+    EventHandlerMap? onReceivePayload,
     // ios 收到APNS消息
-    EventHandlerMap onReceiveNotificationResponse,
+    EventHandlerMap? onReceiveNotificationResponse,
     // ios 收到AppLink消息
-    EventHandler onAppLinkPayload,
+    EventHandler? onAppLinkPayload,
     // ios 收到VOIP消息
-    EventHandlerMap onReceiveVoipPayLoad,
+    EventHandlerMap? onReceiveVoipPayLoad,
 
     // ios收到pushmode回调
-    EventHandlerMap onPushModeResult,
+    EventHandlerMap? onPushModeResult,
     // ios收到setTag回调
-    EventHandlerMap onSetTagResult,
+    EventHandlerMap? onSetTagResult,
     // ios收到别名回调
-    EventHandlerMap onAliasResult,
+    EventHandlerMap? onAliasResult,
     // ios收到查询tag回调
-    EventHandlerMap onQueryTagResult,
+    EventHandlerMap? onQueryTagResult,
     // ios收到APNs即将展示回调
-    EventHandlerMap onWillPresentNotification,
+    EventHandlerMap? onWillPresentNotification,
     // ios收到APNs通知设置跳转回调
-    EventHandlerMap onOpenSettingsForNotification,
-
-  }){
+    EventHandlerMap? onOpenSettingsForNotification,
+  }) {
     _onReceiveClientId = onReceiveClientId;
     _onRegisterDeviceToken = onRegisterDeviceToken;
     _onRegisterVoipToken = onRegisterVoipToken;
@@ -169,49 +169,55 @@ class Getuiflut {
     _onQueryTagResult = onQueryTagResult;
     _onWillPresentNotification = onWillPresentNotification;
     _onOpenSettingsForNotification = onOpenSettingsForNotification;
-  
+
     _channel.setMethodCallHandler(_handleMethod);
   }
 
-  Future<Null> _handleMethod(MethodCall call) async {
-    switch(call.method) {
+  Future<dynamic> _handleMethod(MethodCall call) async {
+    switch (call.method) {
       case "onReceiveClientId":
         print('onReceiveClientId' + call.arguments);
-        return _onReceiveClientId(call.arguments);
+        return _onReceiveClientId?.call(call.arguments);
         break;
       case "onReceiveMessageData":
-        return _onReceiveMessageData(call.arguments.cast<String, dynamic>());
+        return _onReceiveMessageData
+            ?.call(call.arguments.cast<String, dynamic>());
       case "onNotificationMessageArrived":
-        return _onNotificationMessageArrived(call.arguments.cast<String, dynamic>());
+        return _onNotificationMessageArrived
+            ?.call(call.arguments.cast<String, dynamic>());
       case "onNotificationMessageClicked":
-        return _onNotificationMessageClicked(call.arguments.cast<String, dynamic>());
+        return _onNotificationMessageClicked
+            ?.call(call.arguments.cast<String, dynamic>());
       case "onRegisterDeviceToken":
-        return _onRegisterDeviceToken(call.arguments);
+        return _onRegisterDeviceToken?.call(call.arguments);
       case "onReceivePayload":
-        return _onReceivePayload(call.arguments.cast<String, dynamic>());
+        return _onReceivePayload?.call(call.arguments.cast<String, dynamic>());
       case "onReceiveNotificationResponse":
-        return _onReceiveNotificationResponse(call.arguments.cast<String, dynamic>());
+        return _onReceiveNotificationResponse
+            ?.call(call.arguments.cast<String, dynamic>());
       case "onAppLinkPayload":
-        return _onAppLinkPayload(call.arguments);
+        return _onAppLinkPayload?.call(call.arguments);
       case "onRegisterVoipToken":
-        return _onRegisterVoipToken(call.arguments);
+        return _onRegisterVoipToken?.call(call.arguments);
       case "onReceiveVoipPayLoad":
-        return _onReceiveVoipPayLoad(call.arguments.cast<String, dynamic>());
-        
-      case "onPushModeResult":
-        return _onPushModeResult(call.arguments.cast<String, dynamic>());
-      case "onSetTagResult":
-        return _onSetTagResult(call.arguments.cast<String, dynamic>());
-      case "onAliasResult":
-        return _onAliasResult(call.arguments.cast<String, dynamic>());
-      
-      case "onWillPresentNotification":
-        return _onWillPresentNotification(call.arguments.cast<String, dynamic>());
-      case "onOpenSettingsForNotification":
-        return _onOpenSettingsForNotification(call.arguments.cast<String, dynamic>());
-      case "onQueryTagResult":
-        return _onQueryTagResult(call.arguments.cast<String, dynamic>());
+        return _onReceiveVoipPayLoad
+            ?.call(call.arguments.cast<String, dynamic>());
 
+      case "onPushModeResult":
+        return _onPushModeResult?.call(call.arguments.cast<String, dynamic>());
+      case "onSetTagResult":
+        return _onSetTagResult?.call(call.arguments.cast<String, dynamic>());
+      case "onAliasResult":
+        return _onAliasResult?.call(call.arguments.cast<String, dynamic>());
+
+      case "onWillPresentNotification":
+        return _onWillPresentNotification
+            ?.call(call.arguments.cast<String, dynamic>());
+      case "onOpenSettingsForNotification":
+        return _onOpenSettingsForNotification
+            ?.call(call.arguments.cast<String, dynamic>());
+      case "onQueryTagResult":
+        return _onQueryTagResult?.call(call.arguments.cast<String, dynamic>());
 
       default:
         throw new UnsupportedError("Unrecongnized Event");
@@ -221,14 +227,11 @@ class Getuiflut {
   //ios
   //初始化SDK
   void startSdk({
-    String appId,
-    String appKey,
-    String appSecret,
-
+    required String appId,
+    required String appKey,
+    required String appSecret,
   }) {
-    _channel.invokeMethod('startSdk',{'appId':appId, 'appKey':appKey, 'appSecret':appSecret});
+    _channel.invokeMethod(
+        'startSdk', {'appId': appId, 'appKey': appKey, 'appSecret': appSecret});
   }
-
-
-
 }
