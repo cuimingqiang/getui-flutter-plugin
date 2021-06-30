@@ -1,6 +1,6 @@
 # Getui Flutter Plugin
 
-
+### Null safety
 
 ### 引用
 在工程 pubspec.yaml 中加入 dependencies
